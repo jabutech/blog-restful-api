@@ -1,11 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
 	"github.com/joho/godotenv"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 func main() {
@@ -14,6 +15,12 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	appName := os.Getenv("APP_NAME")
-	fmt.Println(appName)
+
+	// Database url
+	dsn := os.Getenv("DATABASE_URL")
+	// Open connection to database
+	_, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 }
