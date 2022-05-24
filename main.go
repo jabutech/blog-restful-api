@@ -1,10 +1,11 @@
 package main
 
 import (
-	"fmt"
+	"jabutech/blog-restful-api/handler"
 	"jabutech/blog-restful-api/helper"
 	"os"
 
+	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -23,5 +24,17 @@ func main() {
 	// Check error with helper
 	helper.FatalError(err)
 
-	fmt.Println("ok")
+	// Handler
+	appHealthHandler := handler.NewAppHealthHandler()
+
+	// Create router with gin
+	router := gin.Default()
+	// Router group
+	api := router.Group("/api")
+
+	// Endpoint app-health
+	api.GET("/app-health", appHealthHandler.Check)
+
+	// Router run
+	router.Run()
 }
