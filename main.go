@@ -3,12 +3,9 @@ package main
 import (
 	"jabutech/blog-restful-api/handler"
 	"jabutech/blog-restful-api/helper"
-	"os"
+	"jabutech/blog-restful-api/router"
 
-	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 )
 
 func main() {
@@ -17,24 +14,20 @@ func main() {
 	// Check error with helper
 	helper.FatalError(err)
 
-	// Database url
-	dsn := os.Getenv("DATABASE_URL")
-	// Open connection to database
-	_, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	// Check error with helper
-	helper.FatalError(err)
+	// // Database url
+	// dsn := os.Getenv("DATABASE_URL")
+	// // Open connection to database
+	// _, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	// // Check error with helper
+	// helper.FatalError(err)
 
 	// Handler
-	appHealthHandler := handler.NewAppHealthHandler()
+	appHealthHandler := handler.NewPingHandler()
 
-	// Create router with gin
-	router := gin.Default()
-	// Router group api
-	api := router.Group("/api")
+	// Use router
+	router := router.NewRouter(appHealthHandler)
 
-	// Endpoint app-health
-	api.GET("/app-health", appHealthHandler.Check)
-
-	// Router run
+	// Run router
 	router.Run()
+
 }
