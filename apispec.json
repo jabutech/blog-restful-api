@@ -389,6 +389,7 @@
     },
     "/posts": {
       "get": {
+        "description": "User can only see other Members Post",
         "security": [
           {
             "bearerAuth": []
@@ -537,6 +538,7 @@
     },
     "/posts/{postId}": {
       "put": {
+        "description": "Posts can only be deleted by the user who owns them.",
         "security": [
           {
             "bearerAuth": []
@@ -652,6 +654,7 @@
         }
       },
       "delete": {
+        "description": "Only admin can delete post.",
         "security": [
           {
             "bearerAuth": []
