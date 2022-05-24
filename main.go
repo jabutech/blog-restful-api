@@ -29,7 +29,7 @@ func main() {
 
 	// Create router with gin
 	router := gin.Default()
-	// Router group
+	// Router group api
 	api := router.Group("/api")
 
 	// Endpoint app-health
