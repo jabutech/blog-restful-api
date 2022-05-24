@@ -1,7 +1,8 @@
 package main
 
 import (
-	"log"
+	"fmt"
+	"jabutech/blog-restful-api/helper"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -12,15 +13,15 @@ import (
 func main() {
 	// Load .env variable
 	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal(err)
-	}
+	// Check error with helper
+	helper.FatalError(err)
 
 	// Database url
 	dsn := os.Getenv("DATABASE_URL")
 	// Open connection to database
 	_, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		log.Fatal(err.Error())
-	}
+	// Check error with helper
+	helper.FatalError(err)
+
+	fmt.Println("ok")
 }
